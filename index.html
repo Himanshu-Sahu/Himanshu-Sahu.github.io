@@ -2,7 +2,8 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +24,7 @@
 
             <h3 class="byline">
                 By Team Intuition
-                <hr class="line">
+                <hr class="line_top">
             </h3>
             <!--  <h3 class = "byline dateline">
             December 2, 2017
@@ -53,14 +54,14 @@
 
             </section>
         </div>
-        <h1 class="headline" style="text-align:center">No. of Crimes Against Women State-wise</h1>
-        <label>
+        <h1 class="headline" style="text-align:center">Analysis of Crime Against Women State-wise</h1>
+        <label id="bar_sort">
             <input type="checkbox" id="check"> Sort values</label>
            <div id="bar"></div>
     </div>
 
     <div id="line_chart">
-            <h1 class="headline" style="text-align:center">Crime Against Women Crime Wise Analysis</h1>
+            <h1 class="headline" style="text-align:center">Analysis of Crime Against Women Crime-Wise</h1>
 
             <select id="CrimeDropDown">
                     <option name="Rape">Rape</option>
@@ -69,6 +70,10 @@
                 </select>
 
     </div>
+    <!-- <div id="pie_chart">
+        <h1 class="headline" style="text-align:center">Analysis of Contribution of Each Crime</h1>
+
+    </div> -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/2.2.0/topojson.min.js"></script>
@@ -78,5 +83,7 @@
     <script type="text/javascript" src="script1.js"></script>
     <script type="text/javascript" src="script3.js"></script>
     <script type="text/javascript" src="script5.js"></script>
+    <script type="text/javascript" src="script2.js"></script>
+
 
     </body>

@@ -5,12 +5,19 @@
     margin: 0
 }
 
+
 .line {
     fill: none;
     stroke: steelblue;
     stroke-width: 3px;
     opacity: 0.3;
     cursor:pointer;
+}
+
+#bar_sort{
+    border: 2px solid black;
+    padding: 5px 15px;
+    color: red;
 }
 
 .name{
@@ -52,14 +59,13 @@ pointer-events: none;
 }
 
 #CrimeDropDown{
-position: absolute;
-right: 4.5rem;
+position: relative;
 background: transparent;
 border: 2px solid black;
 outline: none;
 font-size: 14px;
 height: 29px;
-padding: 5px; /* If you add too much padding here, the options won't show in IE */
+padding: 5px 15px; /* If you add too much padding here, the options won't show in IE */
 width: fit-content;
 color: red;
 }
@@ -73,7 +79,7 @@ a{
 }
 
 body{ 
-    font-family: 'PT Serif', serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     color: #3a3a3a;
 }
 
@@ -189,10 +195,10 @@ h3.byline{
     font-size: 1.1em;
 }
 
-.byline .line{
+.byline .line_top{
         width: 220px;
         margin: 1em auto;
-        border: 2px solid #54278f;
+        border: 2px solid rgb(127,0,0);
 }
 
 h3.byline.dateline{
