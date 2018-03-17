@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mapping of Crime Against Women</title>
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|PT+Serif:400,400i,700" rel="stylesheet">
+    <!-- stylesheets -->
+    <meta name="keywords" content="d3 & mapping, Mapping of Crime Against Women, d3, crime, Applying Geospatial technology for women safety and crime mapping in India">
+    <meta name="description" content="Crimes against women have more than doubled over the past ten years, according to latest.">
+    <link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://github.com/Himanshu-Sahu/Himanshu-Sahu.github.io/blob/master/favicon.ico">
+
+</head>
+    <div class="story">
+        <div class="headline-container">
+            <h1 class="headline">
+                Mapping of Crime Against Women
+            </h1>
+
+            <h3 class="byline">
+                By Team Intuition
+                <hr class="line">
+            </h3>
+            <!--  <h3 class = "byline dateline">
+            December 2, 2017
+        </h3> -->
+            <p class="tease">
+                As many as 2.24 million such crimes against women were reported over the past decade.
+            </p>
+        </div>
+        <div id="map-choropleth">
+            <div class="legend"></div>
+            <div class="viz">
+                <h2 style="font-size: 3em; margin-bottom: 2.5em; margin-top: 1.5em;">Loading...</h2>
+            </div>
+        </div>
+        <div class="chart-source copy">Source: National Crime Records Bureau (NCRB)</div>
+        <div class='copy-container'>
+
+            <section class="copy">
+                <p>Crimes against women have more than doubled over the past ten years, according to latest.</p>
+
+                <p>As many as 2.24 million crimes against women were reported over the past decade: 26 crimes against women
+                    are reported every hour, or one complaint every two minutes</p>
+
+                <p>The semantic meaning of &#34;crime against women&#34; is direct or indirect physical or mental cruelty to
+                    women. Crimes directed specifically against women and in which only women are victims are characterised
+                    as &#34;crimes against women&#34;.</p>
+
+            </section>
+        </div>
+        <h1 class="headline" style="text-align:center">No. of Crimes Against Women State-wise</h1>
+        <label>
+            <input type="checkbox" id="check"> Sort values</label>
+           <div id="bar"></div>
+    </div>
+
+    <div id="line_chart">
+            <h1 class="headline" style="text-align:center">Crime Against Women Crime Wise Analysis</h1>
+
+            <select id="CrimeDropDown">
+                    <option name="Rape">Rape</option>
+                    <option name="Dowry">Dowry</option>
+                    <option name="Cruelty">Cruelty</option>
+                </select>
+
+    </div>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/2.2.0/topojson.min.js"></script>
+
+    <script type="text/javascript" src="d3tip.js"></script>
+
+    <script type="text/javascript" src="script1.js"></script>
+    <script type="text/javascript" src="script3.js"></script>
+    <script type="text/javascript" src="script5.js"></script>
+
+    </body>
