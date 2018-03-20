@@ -15,9 +15,9 @@ var path = d3.geoPath()
         .projection(projection);
 
 d3.queue()
-.defer(d3.csv, "Crime_2011.csv")
-.defer(d3.json, "test.json")
-.defer(d3.json, "India_telagana.topojson")
+.defer(d3.csv, "Total/Crime_2011.csv")
+.defer(d3.json, "India_Map/test.json")
+.defer(d3.json, "India_Map/India_telagana.topojson")
 .await(ready);
 
 var start_year = 2011

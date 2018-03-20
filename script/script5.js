@@ -1,7 +1,7 @@
 d3.queue()
-.defer(d3.csv, "CBR_Main.csv")
-.defer(d3.csv, "DD_Main.csv")
-.defer(d3.csv, "RAPE_Main.csv")
+.defer(d3.csv, "Total/CBR_Main.csv")
+.defer(d3.csv, "Total/DD_Main.csv")
+.defer(d3.csv, "Total/RAPE_Main.csv")
 .await(ready);
 
 function ready(error, data, data1, data2) {

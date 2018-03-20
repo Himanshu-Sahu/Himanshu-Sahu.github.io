@@ -1,5 +1,5 @@
 d3.queue()
-.defer(d3.csv, "Crime_total.csv")
+.defer(d3.csv, "Total/Crime_total.csv")
 .await(ready1);
 
 function ready1(error, data){
