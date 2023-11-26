@@ -201,16 +201,6 @@ function ready(error, data, geo){
 
             return o;
           }
-
-        //   function drawOuterBoundary(boundary){
-        //     g.append("path")
-        //         .datum(boundary)
-        //         .attr("d", path)
-        //         .attr("class", "subunit-boundary");
-        //   }
-
-          // histogram code 
-         
             
             // initalize the tip
             var tip = d3.select("body").append("div")
@@ -271,22 +261,6 @@ function ready(error, data, geo){
         function toTitleCase(str){
             return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
         }
-
-        // function slugify(text){
-        //   return text.toString().toLowerCase()
-        //     .replace(/\s+/g, '-')           // Replace spaces with -
-        //     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-        //     .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-        //     .replace(/^-+/, '')             // Trim - from start of text
-        //     .replace(/-+$/, '');            // Trim - from end of text
-        // }
-
-        // function roundNum(num, decimals) {
-        //     return parseFloat(Math.round(num * 100) / 100).toFixed(decimals);
-        // }
-        // switch to 2012 ends
-
-        // d3 webpack functions
 
       d3.selection.prototype.tspans = function(lines, lh) {
 
