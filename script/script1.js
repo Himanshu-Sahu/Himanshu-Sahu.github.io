@@ -1,85 +1,78 @@
-var w=window,
-dw=document,
-ew=dw.documentElement,
-gw=dw.getElementsByTagName('body')[0]
+let w = window, dw = document, ew = dw.documentElement, gw = dw.getElementsByTagName('body')[0];
 
-var window_width = w.innerWidth||ew.clientWidth||gw.clientWidth
+let window_width = w.innerWidth || ew.clientWidth || gw.clientWidth;
 
-var width = (window_width<600)?window_width*0.95:600, height= width*0.85, margin={left:10, right:10, top: 5, bottom: 5}
-var desktop_width = 300, desktop_height= 280
+let width = (window_width < 600) ? window_width*0.95 : 600, height= width*0.85, margin={left:10, right:10, top: 5, bottom: 5};
+let desktop_width = 300, desktop_height= 280;
 
-var projection = d3.geoMercator();
-var buckets = [10,30,50,70,90,110,130,150]
+let projection = d3.geoMercator();
+let buckets = [10,30,50,70,90,110,130,150];
 
-var path = d3.geoPath()
-        .projection(projection);
+let path = d3.geoPath().projection(projection);
 
+//depricated in d3.js v5
 d3.queue()
 .defer(d3.csv, "Total/Crime_2011.csv")
 .defer(d3.json, "India_Map/test.json")
 .defer(d3.json, "India_Map/India_telagana.topojson")
 .await(ready);
 
-var start_year = 2011
-var end_year = 2013
+let start_year = 2011;
+let end_year = 2013;
+
+let effective_height = window_width < 600 ? height : desktop_height;
+let effective_width = window_width < 600 ? width : desktop_width;
+
 
 function ready(error, data, geo, geo1){
-let byYear = d3.nest()
-.key(function(d){
-    return d.Year
-})
-.entries(data)
-var colors = ['#ffe6e6','#ffb3b3','#ff8080','#ff4d4d','#ff1a1a','#e60000','#b30000','#800000']
+    let byYear = d3.nest().key(d => d.Year).entries(data); //group the data based on year
 
-var years = d3.select('#map-choropleth .viz')
-.selectAll("div")
-.data(byYear)
-.enter()
-.append('div')
-.attr('class',function(d){
-    return 'desktop-year ysvg-'+d.key
-})
-years.append('p')
-.attr('class','year-label')
-.text(function(d){
-return d.key
-})
+    let colors = ['#ffe6e6','#ffb3b3','#ff8080','#ff4d4d','#ff1a1a','#e60000','#b30000','#800000'];
 
-var effective_height = window_width<600?height:desktop_height
-var effective_width = window_width<600?width:desktop_width
+    let years = d3.select('#map-choropleth .viz')
+        .selectAll("div")
+        .data(byYear)
+        .enter()
+        .append('div')
+        .attr('class', d => `desktop-year ysvg-${d.key}`); //create div element for each key
 
-var g = years.append('svg')
-    .attr('height',effective_height)
-    .attr('width',effective_width)
-    .append('g')
-    .attr('class',function(d){
-        return 'y-'+d.key
-    })
-let rate = 0;
-    var boundary = centerZoom(geo,'india');
-    function drawSubUnits(unit){
-        if(end_year>=unit.key){
-        d3.select('.y-'+unit.key)
+    years.append('p')
+        .attr('class','year-label')
+        .text(d => d.key); //append a label to each div
+
+    let g = years.append('svg')
+        .attr('height',effective_height)
+        .attr('width',effective_width)
+        .append('g')
+        .attr('class',d => 'y-'+d.key);
+        
+    let rate = 0;
+
+    let boundary = centerZoom(geo,'india');
+
+    function drawSubUnits(unit) {
+        if(end_year >= unit.key) {
+            d3.select('.y-'+unit.key)
             .selectAll(".subunit")
             .data(topojson.feature(geo, geo.objects['india']).features)
-            .enter().append("path")
-            .attr("class", function(d){ return "subunit g-ac-"+ d.properties.NAME_1.replace(/\s/g, '')})
+            .enter()
+            .append("path")
+            .attr("class", d => "subunit g-ac-"+ d.properties.NAME_1.replace(/\s/g, ''))
             .attr("d", path)
-            .attr('fill', function(data, e){
+            .attr('fill', (data, e) => {
                 for(let i = 0;i < 36;i++){
-                if(unit.values[i].States==data.properties.NAME_1.toUpperCase())
+                    if(unit.values[i].States==data.properties.NAME_1.toUpperCase())
                         return getColor((unit.values[i].Rate_of_Cognizable_Crime))
-                }      
-                })
-            .on('mouseover',function(d){
-                for(let i = 0;i < 34;i++){
-                if(unit.values[i].States==d.properties.NAME_1.toUpperCase())
-                       rate = unit.values[i].Case_Reported
-            }      
-        
-                    mapTipOn(d.properties.NAME_1,+unit.key,rate)
+                }         
             })
-            .on('mouseout',function(d){
+            .on('mouseover', (d) => {
+                for(let i = 0; i < 34;i++){
+                    if(unit.values[i].States==d.properties.NAME_1.toUpperCase())
+                       rate = unit.values[i].Case_Reported
+                }          
+                mapTipOn(d.properties.NAME_1,+unit.key,rate)
+            })
+            .on('mouseout', ( ) => {
                 mapTipOff()
             })
         }
@@ -88,23 +81,22 @@ let rate = 0;
             .selectAll(".subunit")
             .data(topojson.feature(geo1, geo1.objects['India_telagana']).features)
             .enter().append("path")
-            .attr("class", function(d){return "subunit g-ac-"+ d.properties.NAME_1.replace(/\s/g, '')})
+            .attr("class", (d) => "subunit g-ac-"+ d.properties.NAME_1.replace(/\s/g, ''))
             .attr("d", path)
-            .attr('fill', function(data, e){
+            .attr('fill', (data, e) => {
                 for(let i = 0;i < 36;i++){
-                if(unit.values[i].States==data.properties.NAME_1)
+                    if(unit.values[i].States==data.properties.NAME_1)
                         return getColor((unit.values[i].Rate_of_Cognizable_Crime))
                 }      
-                })
+            })
             .on('mouseover',function(d){
                 for(let i = 0;i < 36;i++){
-                if(unit.values[i].States==d.properties.NAME_1)
+                    if(unit.values[i].States==d.properties.NAME_1)
                        rate = unit.values[i].Case_Reported
-            }      
-        
-                    mapTipOn(d.properties.NAME_1,+unit.key,rate)
+            }          
+                mapTipOn(d.properties.NAME_1,+unit.key,rate)
             })
-            .on('mouseout',function(d){
+            .on('mouseout',(d) => {
                 mapTipOff()
             })
         } 
@@ -112,7 +104,7 @@ let rate = 0;
            
     }
 
-    d3.selectAll('.desktop-year').each(function(d){
+    d3.selectAll('.desktop-year').each((d) => {
         drawSubUnits(d)
     })
 
@@ -128,9 +120,9 @@ let rate = 0;
         .enter()
         .append('div')
         .attr('class','legend-boxes')
-        .style('background-color',function(d){
+        .style('background-color', (d) => {
             return d
-        })
+        });
 
     d3.select('.legend')
         .append('div')
@@ -140,7 +132,7 @@ let rate = 0;
         .enter()
         .append('p')
         .attr('class','legend-labels')
-        .text(function(d){
+        .text((d) => {
             return d
         })
 
@@ -167,17 +159,16 @@ let rate = 0;
     }
 
         
-    d3.select('.viz h2')
-    .style('display','none')
+    d3.select('.viz h2').style('display','none'); //hide loading header
 
     function centerZoom(data, selected){
-        var o = topojson.mesh(data, data.objects[selected], function(a, b) { return a === b; });
+        let o = topojson.mesh(data, data.objects[selected], (a, b) => a === b);
 
         projection
             .scale(1)
             .translate([0, 0]);
 
-        var b = path.bounds(o),
+        let b = path.bounds(o),
             s = 1 / Math.max((b[1][0] - b[0][0]) / effective_width, (b[1][1] - b[0][1]) / effective_height),
             t = [(effective_width - s * (b[1][0] + b[0][0])) / 2, (effective_height - s * (b[1][1] + b[0][1])) / 2];
 
@@ -188,7 +179,7 @@ let rate = 0;
         return o;
       }
 
-      var tip = d3.select("body").append("div")
+      let tip = d3.select("body").append("div")
                 .attr("class", "tip");
             tip.append("div")
                 .attr("class", "close-tip");
@@ -205,7 +196,7 @@ let rate = 0;
             }
 
             function mapTipOn(ac, year,d){
-                    var rect_class = ".ysvg-"+year+" .g-ac-" + ac.replace(/\s/g,'');
+                    let rect_class = ".ysvg-"+year+" .g-ac-" + ac.replace(/\s/g,'');
                         d3.selectAll( ".g-ac-" + ac).classed("selected", true).moveToFront();
                     tip.select(".title")
                         .html(ac +" No. of crimes "+ d);
@@ -215,18 +206,18 @@ let rate = 0;
 
                     // position
 
-                    var media_pos = d3.select(rect_class).node().getBoundingClientRect();
-                    var tip_pos = d3.select(".tip").node().getBoundingClientRect();
-                    var tip_offset = 5;
-                    var window_offset = window.pageYOffset;
-                    var window_padding = 40;
+                    let media_pos = d3.select(rect_class).node().getBoundingClientRect();
+                    let tip_pos = d3.select(".tip").node().getBoundingClientRect();
+                    let tip_offset = 5;
+                    let window_offset = window.pageYOffset;
+                    let window_padding = 40;
 
-                    var left = (media_pos.left - tip_pos.width / 2);
+                    let left = (media_pos.left - tip_pos.width / 2);
                     left = left < 0 ? media_pos.left :
                         left + tip_pos.width > window_width ? media_pos.left - tip_pos.width :
                         left;
 
-                    var top = window_offset + media_pos.top - tip_pos.height - tip_offset;
+                    let top = window_offset + media_pos.top - tip_pos.height - tip_offset;
                     top = top < window_offset + window_padding ? window_offset + media_pos.top + media_pos.height + tip_offset :
                         top;
                     
@@ -236,32 +227,32 @@ let rate = 0;
                         .style("top", top + "px");
                 }
         } 
+        
         d3.selection.prototype.tspans = function(lines, lh) {
-
             return this.selectAll('tspan')
                 .data(lines)
                 .enter()
                 .append('tspan')
-                .text(function(d) { return d; })
+                .text((d) =>  d)
                 .attr('x', 0)
-                .attr('dy', function(d,i) { return i ? lh || 10 : 0; });
+                .attr('dy', (d,i) => i ? lh || 10 : 0);
         };
   
         d3.selection.prototype.moveToFront = function() {  
-        return this.each(function(){
-          this.parentNode.appendChild(this);
-        });
-          };
-          d3.selection.prototype.moveToBack = function() {  
-              return this.each(function() { 
-                  var firstChild = this.parentNode.firstChild; 
-                  if (firstChild) { 
-                      this.parentNode.insertBefore(this, firstChild); 
-                  } 
-              });
-          };
+            return this.each(function(){
+              this.parentNode.appendChild(this);
+            });
+        };
+
+        d3.selection.prototype.moveToBack = function() {  
+            return this.each(() => { 
+                let firstChild = this.parentNode.firstChild; 
+                if (firstChild)
+                    this.parentNode.insertBefore(this, firstChild);             
+            });
+        };
   
-          function toTitleCase(str){
-            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        function toTitleCase(str){
+            return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
         }
       
